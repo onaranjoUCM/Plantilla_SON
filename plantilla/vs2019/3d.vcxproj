@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup>
+    <Arch>x86</Arch>
+    <Arch Condition="'$(Platform)'=='x64'">x64</Arch>
+    <Suffix Condition="'$(Configuration)'=='Debug'">L</Suffix>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6C3592CC-80F7-4BC0-8A02-CC6968D9776F}</ProjectGuid>
+    <ProjectName>Plantilla</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)_builds\$(ProjectName)\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_builds\$(ProjectName)\$(Configuration)\$(Platform)\Intermediate\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)$(Suffix)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>..\..\inc</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\lib\$(Arch)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod$(Suffix)_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>if not exist ..\bin mkdir ..\bin
+copy /Y "$(TargetPath)" ..\bin
+copy /Y "..\..\lib\$(Arch)\fmod$(Suffix).dll" ..\bin
+copy /Y "..\..\lib\$(Arch)\fmod$(Suffix).dll" "$(OutDir)"
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="common.cpp" />
+    <ClCompile Include="common_platform.cpp" />
+    <ClCompile Include="examples_src\3d.cpp" />
+    <ClCompile Include="examples_src\asyncio.cpp" />
+    <ClCompile Include="examples_src\channel_groups.cpp" />
+    <ClCompile Include="examples_src\convolution_reverb.cpp" />
+    <ClCompile Include="examples_src\dsp_custom.cpp" />
+    <ClCompile Include="examples_src\dsp_effect_per_speaker.cpp" />
+    <ClCompile Include="examples_src\dsp_inspector.cpp" />
+    <ClCompile Include="examples_src\effects.cpp" />
+    <ClCompile Include="examples_src\gapless_playback.cpp" />
+    <ClCompile Include="examples_src\generate_tone.cpp" />
+    <ClCompile Include="examples_src\granular_synth.cpp" />
+    <ClCompile Include="examples_src\load_from_memory.cpp" />
+    <ClCompile Include="examples_src\multiple_speaker.cpp" />
+    <ClCompile Include="examples_src\multiple_system.cpp" />
+    <ClCompile Include="examples_src\net_stream.cpp" />
+    <ClCompile Include="examples_src\play_sound.cpp" />
+    <ClCompile Include="examples_src\play_stream.cpp" />
+    <ClCompile Include="examples_src\record.cpp" />
+    <ClCompile Include="examples_src\record_enumeration.cpp" />
+    <ClCompile Include="examples_src\user_created_sound.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Sound.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
+    <ClCompile Include="src\SoundMethods.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h" />
+    <ClInclude Include="common_platform.h" />
+    <ClInclude Include="src\Sound.h" />
+    <ClInclude Include="src\SoundManager.h" />
+    <ClInclude Include="src\SoundMethods.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

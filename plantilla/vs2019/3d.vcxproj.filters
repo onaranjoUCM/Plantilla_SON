@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="examples_src\3d.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\asyncio.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\channel_groups.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\convolution_reverb.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\dsp_custom.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\dsp_effect_per_speaker.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\dsp_inspector.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\effects.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\gapless_playback.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\generate_tone.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\granular_synth.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\load_from_memory.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\multiple_speaker.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\multiple_system.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\net_stream.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\play_sound.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\play_stream.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\record.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\record_enumeration.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="examples_src\user_created_sound.cpp">
+      <Filter>examples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundManager.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundMethods.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common_platform.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="common">
+      <UniqueIdentifier>{937abb1b-0123-4875-9828-07ed9f9813e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="examples">
+      <UniqueIdentifier>{1c9bb9e1-8699-45f7-acde-4a3b4b23e68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{62636f27-3687-49ea-9d46-f75c938ad0d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Sound.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundManager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SoundMethods.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common_platform.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
