@@ -7,8 +7,7 @@
 
 using namespace FMOD;
 
-int FMOD_Main()
-{
+int FMOD_Main() {
 	// inicializacion
 	System* system;
 	System_Create(&system); // Creamos el objeto system
@@ -17,8 +16,7 @@ int FMOD_Main()
 	SoundTrack* sound = new SoundTrack(system, "muestras/piano.ogg", true, false);
 	sound->play();
 	
-	while (true)
-	{
+	while (true) {
 		manager->update();
 	}
 

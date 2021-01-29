@@ -5,8 +5,7 @@
 #include <iostream>¡
 
 using namespace FMOD;
-class SoundTrack
-{
+class SoundTrack {
 	Sound* sound;
 
 	// system y result de SoundManager
@@ -45,4 +44,3 @@ public:
 
 	void setPositionAndVelocity(FMOD_VECTOR pos, FMOD_VECTOR vel);
 };
-

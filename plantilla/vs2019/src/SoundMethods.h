@@ -8,10 +8,8 @@
 
 using namespace FMOD;
 
-static class SoundMethods
-{
+static class SoundMethods {
 public:
 	static void fundidoManual(SoundTrack* sound1, SoundTrack* sound2, int ms, float volumeVariation);
 	static void fundidoAuto(SoundTrack* sound1, SoundTrack* sound2, int ms, float volumeVariation);
 };
-

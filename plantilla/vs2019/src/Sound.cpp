@@ -1,34 +1,36 @@
 #include "Sound.h"
 #include <Windows.h>
 
-SoundTrack::SoundTrack(System* system, const char* soundName, bool loop, bool _3d)
-{
+SoundTrack::SoundTrack(System* system, const char* soundName, bool loop, bool _3d) {
 	system_ = system;
 	soundName_ = soundName;
 	loop_ = loop;
 	_3d_ = _3d;
+	
 	init();
 }
 
-SoundTrack::~SoundTrack()
-{
+SoundTrack::~SoundTrack() {
 	release();
 }
 
-void SoundTrack::init()
-{
+void SoundTrack::init() {
 	FMOD_MODE loopMode;
 	FMOD_MODE dimensionMode;
 
-	if (loop_)
+	if (loop_) {
 		loopMode = FMOD_LOOP_NORMAL;
-	else
+	}
+	else {
 		loopMode = FMOD_LOOP_OFF;
+	}
 
-	if (_3d_)
+	if (_3d_) {
 		dimensionMode = FMOD_3D;
-	else
+	}
+	else {
 		dimensionMode = FMOD_2D;
+	}
 
 	system_->createSound(soundName_,    // path al archivo de sonido
 		dimensionMode | loopMode,    // valores (por defecto en este caso: sin loop, 2D)
@@ -36,13 +38,11 @@ void SoundTrack::init()
 		&sound);// handle al buffer de sonido
 }
 
-void SoundTrack::release()
-{
+void SoundTrack::release() {
 	sound->release();
 }
 
-void SoundTrack::play()
-{
+void SoundTrack::play() {
 	system_->playSound(sound,   // buffer que se "engancha" a ese canal
 		0, // grupo de canales, 0 sin agrupar (agrupado en el master)
 		false,   // arranca sin "pause" (se reproduce directamente)
@@ -55,43 +55,36 @@ void SoundTrack::stop()
 	channel->stop();
 }
 
-void SoundTrack::togglePause()
-{
+void SoundTrack::togglePause() {
 	bool paused;
 	channel->getPaused(&paused);
 	channel->setPaused(!paused);
 }
 
-void SoundTrack::toggleMute()
-{
+void SoundTrack::toggleMute() {
 	bool mute;
 	channel->getMute(&mute);
 	channel->setMute(!mute);
 }
 
-void SoundTrack::setVolume(float volume)
-{
+void SoundTrack::setVolume(float volume) {
 	channel->setVolume(volume_);
 }
 
-void SoundTrack::changeVolume(float volume)
-{
+void SoundTrack::changeVolume(float volume) {
 	volume_ = volume_ + volume;
 	channel->setVolume(volume_);
 }
 
-void SoundTrack::changePan(float pan)
-{
+void SoundTrack::changePan(float pan) {
 	channel->setPan(pan);
 }
 
-void SoundTrack::fadeInManual(int ms, float volumeVariation)
-{
+void SoundTrack::fadeInManual(int ms, float volumeVariation) {
 	int msStep = ms / 10;
 	float volumeStep = volumeVariation / 10;
 
-	for (int i = 0;i < 10;i++)
-	{
+	for (int i = 0;i < 10;i++) {
 		volume_ = volume_ + volumeStep;
 		channel->setVolume(volume_);
 		system_->update();
@@ -99,23 +92,19 @@ void SoundTrack::fadeInManual(int ms, float volumeVariation)
 	}
 }
 
-void SoundTrack::fadeOutManual(int ms, float volumeVariation)
-{
+void SoundTrack::fadeOutManual(int ms, float volumeVariation) {
 	int msStep = ms / 10;
 	float volumeStep = volumeVariation / 10;
 
-	for (int i = 0;i < 10;i++)
-	{
+	for (int i = 0;i < 10;i++) {
 		volume_ = volume_ - volumeStep;
 		channel->setVolume(volume_);
 		system_->update();
 		Sleep(msStep);
 	}
-
 }
 
-void SoundTrack::fadeInAuto(int ms, float volumeVariation)
-{
+void SoundTrack::fadeInAuto(int ms, float volumeVariation) {
 	unsigned long long parentclock;
 	int rate;
 	int seconds = ms / 1000;
@@ -126,8 +115,7 @@ void SoundTrack::fadeInAuto(int ms, float volumeVariation)
 	channel->addFadePoint(parentclock + (rate * seconds), volume_);
 }
 
-void SoundTrack::fadeOutAuto(int ms, float volumeVariation)
-{
+void SoundTrack::fadeOutAuto(int ms, float volumeVariation) {
 	unsigned long long parentclock;
 	int rate;
 	int seconds = ms / 1000;
@@ -138,17 +126,14 @@ void SoundTrack::fadeOutAuto(int ms, float volumeVariation)
 	channel->addFadePoint(parentclock + (rate * seconds), volume_);
 }
 
-void SoundTrack::startDelayed(int milliseconds)
-{
+void SoundTrack::startDelayed(int milliseconds) {
 	channel->setPosition(milliseconds, FMOD_TIMEUNIT_MS);
 }
 
-void SoundTrack::setLoopTimes(int n)
-{
+void SoundTrack::setLoopTimes(int n) {
 	channel->setLoopCount(n);
 }
 
-void SoundTrack::setPositionAndVelocity(FMOD_VECTOR pos, FMOD_VECTOR vel)
-{
+void SoundTrack::setPositionAndVelocity(FMOD_VECTOR pos, FMOD_VECTOR vel) {
 	channel->set3DAttributes(&pos, &vel);
 }

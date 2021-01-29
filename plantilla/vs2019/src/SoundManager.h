@@ -1,13 +1,11 @@
 #pragma once
-
 #include"fmod.hpp"// para utilizar el wrapper C++
 #include"fmod_errors.h"  // para manejo de errores
 #include <iostream>
 
 using namespace FMOD;
 
-class SoundManager
-{
+class SoundManager {
 	System* system_;
 
 public:
@@ -17,4 +15,3 @@ public:
 	void update();
 	void release();
 };
-
