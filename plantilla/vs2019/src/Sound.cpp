@@ -50,8 +50,7 @@ void SoundTrack::play() {
 	// el sonido ya se esta reproduciendo
 }
 
-void SoundTrack::stop()
-{
+void SoundTrack::stop() {
 	channel->stop();
 }
 
@@ -68,6 +67,7 @@ void SoundTrack::toggleMute() {
 }
 
 void SoundTrack::setVolume(float volume) {
+	volume_ = volume;
 	channel->setVolume(volume_);
 }
 
