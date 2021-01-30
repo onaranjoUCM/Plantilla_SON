@@ -33,6 +33,8 @@ public:
 	void changeVolume(float volume);
 	void changePan(float pan);
 
+	void setPitch(float p);
+
 	void fadeInManual(int ms, float volumeVariation);
 	void fadeOutManual(int ms, float volumeVariation);
 

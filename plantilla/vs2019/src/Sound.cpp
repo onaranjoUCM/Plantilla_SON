@@ -80,6 +80,10 @@ void SoundTrack::changePan(float pan) {
 	channel->setPan(pan);
 }
 
+void SoundTrack::setPitch(float p) {
+	channel->setPitch(p);
+}
+
 void SoundTrack::fadeInManual(int ms, float volumeVariation) {
 	int msStep = ms / 10;
 	float volumeStep = volumeVariation / 10;
