@@ -1,4 +1,4 @@
-#include "fmod.hpp"
+﻿#include "fmod.hpp"
 #include "../common.h"
 #include <conio.h>
 
@@ -8,69 +8,61 @@
 
 using namespace FMOD;
 
-Reverb3D* createReverb3D(System* system_, FMOD_VECTOR pos, float mindist, float maxdist, FMOD_REVERB_PROPERTIES prop) {
-	Reverb3D* reverb;
-	system_->createReverb3D(&reverb);
-	reverb->setProperties(&prop);
-	reverb->set3DAttributes(&pos, mindist, maxdist);
-	return reverb;
-}
-
-Geometry* createGeometry(System* system_, FMOD_VECTOR pos, FMOD_VECTOR scale, const FMOD_VECTOR* numvertices) {
-	Geometry* geometry;
-	system_->createGeometry(1, 4, &geometry);
-	geometry->addPolygon(1.0f, 0.1f, true, 4, numvertices, 0);
-	geometry->setActive(false);
-	geometry->setPosition(&pos);
-	geometry->setScale(&scale);
-	return geometry;
-}
-
 int FMOD_Main()
 {
-	// inicializacion
 	System* system;
 	System_Create(&system);
-	SoundManager* manager = new SoundManager(system);
+	system->init(128, FMOD_INIT_NORMAL, 0);
 
-	FMOD_VECTOR pos = { 0.0f, 0.0f, -1.0f };
-	FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
-	FMOD_VECTOR up = { 0.0f, 1.0f, 0.0f };
-	FMOD_VECTOR at = { 1.0f, 0.0f, 0.0f };
+	// Situar el listener en la posición (0, 0,−1), orientado en posición vertical y mirando hacia adelante.
+	FMOD_VECTOR pos = { 0, 0, -1 };
+	FMOD_VECTOR vel = { 0, 0, 0 };
+	FMOD_VECTOR up = { 0, 1, 0 };
+	FMOD_VECTOR at = { 1, 0, 0 };
 	system->set3DListenerAttributes(0, &pos, &vel, &up, &at);
 
-	// Geometry
-	const FMOD_VECTOR vertices = { 0.0f, 0.0f, 0.0f };
+	// Cargar la muestra en loop y asociarla a un canal emisor.
+	Sound* sound;
+	system->createSound("./muestras/footstep.wav", FMOD_3D | FMOD_LOOP_NORMAL, 0, &sound);
 
-	SoundTrack* motor = new SoundTrack(system, "./muestras/footstep.wav", true, true);
-	motor->setPositionAndVelocity({ 0, 0, 4 }, { 0, 0, 0 });
-	motor->play();
+	Channel* channel;
+	FMOD_VECTOR soundPos = { 0, 0, 4 };
+	system->playSound(sound, 0, false, &channel);
+	channel->set3DAttributes(&soundPos, &vel);
 
 	float pitch = 1;
 
-	Reverb3D* reverb = createReverb3D(system, {2, 0, 6}, 1, 10, FMOD_PRESET_CONCERTHALL);
-	Geometry* geometry = createGeometry(system, pos, { 4, 4, 0 }, &vertices);
+	// Reverb
+	Reverb3D* reverb;
+	system->createReverb3D(&reverb);
+	FMOD_REVERB_PROPERTIES prop = FMOD_PRESET_CONCERTHALL;
+	reverb->setProperties(&prop);
+	FMOD_VECTOR reverbPos = { 2, 0, 6 };
+	reverb->set3DAttributes(&reverbPos, 1, 10);
 
-	// Main loop
+	// Geometry / Occlussion
+	Geometry* geometry;
+	system->createGeometry(1, 4, &geometry);
+	FMOD_VECTOR* vertices = new FMOD_VECTOR[4];
+		vertices[0] = { -2, 2, 0 };
+		vertices[1] = { 2, 2, 0 };
+		vertices[2] = { 2, -2, 0 };
+		vertices[3] = { -2, -2, 0 };
+	int polygonIndex;
+	geometry->addPolygon(1, 1, true, 4, vertices, &polygonIndex);
+
 	bool playing = true;
 	while (playing) {
 		if (_kbhit()) {
 			// Listener movement
-			if (_getch() == 'w') pos.x += 1.0f;
-			if (_getch() == 'a') pos.z += 1.0f; 
-			if (_getch() == 's') pos.x -= 1.0f;
-			if (_getch() == 'd') pos.z -= 1.0f; 
+			if (_getch() == 'w') pos.z += 1.0f;
+			if (_getch() == 'a') pos.x -= 1.0f;
+			if (_getch() == 's') pos.z -= 1.0f;
+			if (_getch() == 'd') pos.x += 1.0f;
 
 			// Pitch
-			if (_getch() == 'P') {
-				pitch += 0.01;
-				motor->setPitch(pitch);
-			}
-
-			if (_getch() == 'p') {
-				pitch -= 0.01;
-				motor->setPitch(pitch);
-			}
+			if (_getch() == 'P') pitch += 0.01;
+			if (_getch() == 'p') pitch -= 0.01;
 
 			// Reverb
 			if (_getch() == 'R') reverb->setActive(true);
@@ -83,10 +75,12 @@ int FMOD_Main()
 			// Quit
 			if (_getch() == 'q')
 				playing = false;
+
+			channel->setPitch(pitch);
+			system->set3DListenerAttributes(0, &pos, &vel, &up, &at);
 		}
 
-		system->set3DListenerAttributes(0, &pos, &vel, &up, &at);
-		manager->update();
+		system->update();
 
 		// Debug
 		std::cout << "Listener: " << pos.x << " " << pos.z << " ";
@@ -96,10 +90,6 @@ int FMOD_Main()
 		geometry->getActive(&active);
 		std::cout << " Occlusion: " << active << "\n";
 	}
-
-	// Closing
-	delete motor;
-	delete manager;
 
 	return 0;
 }
