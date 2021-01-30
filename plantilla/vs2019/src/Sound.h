@@ -45,6 +45,4 @@ public:
 	void setLoopTimes(int n); // n=-1 for infinite loop
 
 	void setPositionAndVelocity(FMOD_VECTOR pos, FMOD_VECTOR vel);
-
-	void getVolume() const { std::cout << volume_ << "\n"; }
 };
